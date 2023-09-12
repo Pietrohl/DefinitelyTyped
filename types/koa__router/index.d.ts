@@ -20,6 +20,14 @@
  import * as Koa from "koa";
 
  declare namespace Router {
+
+    interface SchemaCompiler {
+        body?: unknown;
+        query?: unknown;
+        params?: unknown;
+        headers?: unknown;
+    }
+
     interface RouterOptions {
         /**
          * Prefix for all routes.
@@ -246,7 +254,15 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
-
+    /**
+     * HTTP get method
+     */
+    get<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    
     /**
      * HTTP post method
      */
@@ -260,6 +276,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
      */
     post<T = {}, U = {}, B = unknown>(
         path: string | RegExp | Array<string | RegExp>,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    /**
+     * HTTP post method
+     */
+    post<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
 
@@ -278,6 +302,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
+    /**
+     * HTTP put method
+     */
+    put<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
 
     /**
      * HTTP link method
@@ -292,6 +324,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
      */
     link<T = {}, U = {}, B = unknown>(
         path: string | RegExp | Array<string | RegExp>,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    /**
+     * HTTP link method
+     */
+    link<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
 
@@ -310,6 +350,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
+    /**
+     * HTTP unlink method
+     */
+    unlink<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
 
     /**
      * HTTP delete method
@@ -324,6 +372,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
      */
     delete<T = {}, U = {}, B = unknown>(
         path: string | RegExp | Array<string | RegExp>,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    /**
+     * HTTP delete method
+     */
+    delete<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,        
+        schema: Router.SchemaCompiler,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
 
@@ -342,6 +398,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
+    /**
+     * Alias for `router.delete()` because delete is a reserved word
+     */
+    del<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,        
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
 
     /**
      * HTTP head method
@@ -356,6 +420,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
      */
     head<T = {}, U = {}, B = unknown>(
         path: string | RegExp | Array<string | RegExp>,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    /**
+     * HTTP head method
+     */
+    head<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
 
@@ -374,6 +446,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
+    /**
+     * HTTP options method
+     */
+    options<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>   
+    ): Router<StateT, ContextT>;
 
     /**
      * HTTP patch method
@@ -388,6 +468,14 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
      */
     patch<T = {}, U = {}, B = unknown>(
         path: string | RegExp | Array<string | RegExp>,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
+    ): Router<StateT, ContextT>;
+    /**
+     * HTTP patch method
+     */
+    patch<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
 
@@ -406,6 +494,16 @@ declare class Router<StateT = Koa.DefaultState, ContextT = Koa.DefaultContext> {
         path: string | RegExp | Array<string | RegExp>,
         ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>
     ): Router<StateT, ContextT>;
+    /**
+     * Register route with all methods.
+     */
+    all<T = {}, U = {}, B = unknown>(
+        path: string | RegExp | Array<string | RegExp>,
+        schema: Router.SchemaCompiler,
+        ...middleware: Array<Router.Middleware<StateT & T, ContextT & U, B>>   
+    ): Router<StateT, ContextT>;
+
+
 
     /**
      * Set the path prefix for a Router instance that was already initialized.
